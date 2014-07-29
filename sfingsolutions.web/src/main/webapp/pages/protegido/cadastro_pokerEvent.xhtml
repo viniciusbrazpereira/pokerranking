@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/resources/includes/template_desktop.xhtml">
+
+<ui:define name="body">
+	<div id="pagina_centro" align="left">              
+		<p:panel id="panelVisual">
+			<f:facet name="header">
+			    <h:outputLabel value="#{rotulo['cadastroEvent.titlePage']}" style="float:left;"/>
+			    <!-- right -->
+			    <h:form id="formButtonUser">			    	
+					<p:commandLink id="btnNovo" 
+								   title="#{rotulo['novo']}" 
+								   actionListener="#{cadastroEventMBean.preNovo()}"
+								   oncomplete="dlgNovoCadastro.show();" 
+								   update=":form:growl :formDialogNovoCadastro:pnNovoCadastro"
+								   style="float:right;">
+									 
+						<p:graphicImage value="/resources/img/menuicon/blog_compose.png" width="24" height="24" />
+					</p:commandLink>												
+			    </h:form>
+			</f:facet>    
+              
+    		<h:form id="form">		    		
+    			<ui:include src="/resources/includes/custom_messages.xhtml" />
+    			
+    			<p:dataTable id="tblEvento" 
+							 var="item" 
+							 value="#{cadastroEventMBean.listagem}" 
+							 emptyMessage="#{rotulo.gridvazio}"
+							 paginator="true" 
+							 rows="#{cadastroEventMBean.listagem.rows}" 
+							 rowsPerPageTemplate="#{cadastroEventMBean.listagem.rowsPerPageTemplate}" 
+							 lazy="true" 
+							 style="width:100%;font-size:11px;"
+							 paginatorPosition="#{cadastroEventMBean.listagem.paginatorPosition}"					
+							 paginatorTemplate="#{cadastroEventMBean.listagem.paginatorTemplate}">
+							 
+					<f:facet name="header"> 
+						<h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.titulo']}" />
+			        </f:facet>
+
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.id']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.id}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.descricao']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.descricao}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.buy']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+						<h:outputText value="#{item.buy}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.rebuy']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+						<h:outputText value="#{item.rebuy}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addon']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+						<h:outputText value="#{item.addon}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeWinner']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+						<h:outputText value="#{item.prizeWinner}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeHome']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+	                    <h:outputText value="#{item.prizeHome}">
+	                    	<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeTotal']}" />		                          
+	                    </f:facet>
+	                    <h:outputText value="R$" />
+	                    <h:outputText value="#{item.prizeTotal}">
+	                    	<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataInclusao']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.dataInclusao}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+            			</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.data']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.dataEvent}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+            			</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataInicio']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.dataInicio}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+            			</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataFinal']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.dataFinal}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+            			</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<h:panelGrid columns="3" styleClass="noBorders">						
+							<p:commandButton id="btnEditar" 
+								icon="ui-icon-pencil" 
+								title="#{rotulo.editar}" 
+								actionListener="#{cadastroEventMBean.preEditar(item)}" 
+								disabled="#{cadastroEventMBean.isEditarPokerEvent(item)}"
+								oncomplete="dlgNovoCadastro.show();"
+								update=":form:growl :formDialogNovoCadastro:pnNovoCadastro"/>
+								
+							<p:commandButton id="btnAddPunterEvent" 
+								icon="ui-icon-user-group" 
+								title="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonAddApostador']}" 
+								actionListener="#{cadastroEventMBean.preAddPunter(item)}" 
+								update=":form:growl :formDialogOpenEvent:pnOpenEvent"/>	
+								
+							<p:commandButton id="btnInitEvent" 
+								icon="ui-icon-monitor" 
+								title="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonStart']}" 
+								actionListener="#{cadastroEventMBean.preIniciarEvento(item)}" 
+								update=":form:growl :formDialogOpenEvent:pnOpenEvent :formDialogStartEvent:pnStartEvent"/>
+						</h:panelGrid>		
+					</p:column>
+				</p:dataTable>
+    		
+    		</h:form>
+	    </p:panel>
+	    
+	    <p:dialog id="modalDialogNovoCadastro" 
+	     		   widgetVar="dlgNovoCadastro" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="250" 
+	     		   width="750" 
+	     		   position="200,50"
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="#{rotulo['cadastroEvent.titulo.dialog']}">
+	     		   
+	        <h:form id="formDialogNovoCadastro" prependId="false">
+	            <p:panel id="pnNovoCadastro">
+		            <h:panelGrid columns="2" cellspacing="5">
+						<h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.descricao']}" />
+		                <h:inputText value="#{cadastroEventMBean.item.descricao}" size="60" maxlength="40"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.buy']}" />
+		                <h:inputText value="#{cadastroEventMBean.item.buy}" size="5" maxlength="5" required="true"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.rebuy']}" />
+		                <h:inputText value="#{cadastroEventMBean.item.rebuy}" size="5" maxlength="5" required="true"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.addon']}" />
+		                <h:inputText value="#{cadastroEventMBean.item.addon}" size="5" maxlength="5" required="true"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.prizeHome']}" />
+		                <h:panelGrid columns="6" cellpadding="20">
+			                <p:spinner id="editCountAddon" value="#{cadastroEventMBean.item.percentPrizeHome}" min="0" max="100" size="3"/>
+			                <p:spacer width="20"/>
+			                
+			                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.isPercentRebuyin']}" />
+			                <p:selectBooleanCheckbox value="#{cadastroEventMBean.item.isPercentRebuyin}"/> 
+			                
+			                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.isPercentAddon']}" />
+			                <p:selectBooleanCheckbox value="#{cadastroEventMBean.item.isPercentAddon}"/>
+			            </h:panelGrid>  
+		                
+		                <h:outputLabel value="#{rotulo['cadastroEvent.dialogCadastro.dataEvent']}" />
+		                <p:calendar widgetVar="selDataInicia"
+		                	        value="#{cadastroEventMBean.item.dataEvent}" 
+		                	        showOn="both"
+		                	        locale="pt" 
+		                	        pattern="dd/MM/yyyy HH:mm">				                    
+		                </p:calendar>
+		            </h:panelGrid>
+		            
+		            <br />		            
+	            
+	            	<div align="center">
+						<h:panelGrid columns="2" >			           	
+							<p:commandButton id="idBtnSalvar" 
+								value="#{rotulo['cadastroUsuario.dialog.botao.salvar']}" 
+								title="#{rotulo['cadastroUsuario.dialog.botao.salvar']}"
+								actionListener="#{cadastroEventMBean.validarCamposCadastro()}"
+								update=":form:growl :formDialogConfirmeSalvar:pnConfirmDialogSalvar"/>	
+							
+							<p:commandButton id="idBtnCancelarCadastro" 
+								title="#{rotulo['cadastroUsuario.dialog.botao.cancelar']}" 
+								value="#{rotulo['cadastroUsuario.dialog.botao.cancelar']}" 
+								actionListener="#{cadastroEventMBean.cancelar()}"
+								oncomplete="dlgNovoCadastro.hide();"/>
+						</h:panelGrid>
+					</div>			            		                        
+	            </p:panel>       
+	        </h:form>
+	    </p:dialog>
+	    
+	    <p:dialog id="modalDialogOpenEvent" 
+	     		   widgetVar="dlgOpenEvent" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="450" 
+	     		   width="940" 
+	     		   position="120,50"
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="#{rotulo['cadastroEvent.titulo.dialogOpenEvent']}">
+	     		   
+	    	<h:form id="formDialogOpenEvent" prependId="false">
+	            <p:panel id="pnOpenEvent" style="width:910px;height:440px;">
+					<h:panelGrid columns="2" cellspacing="5">
+	              		<p:selectOneMenu id="selectApostador" value="#{cadastroEventMBean.idApostador}" style="width:320px">  
+				       		<f:selectItem itemLabel="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.itemApostador']}" itemValue="0" />  
+				            <f:selectItems value="#{cadastroEventMBean.selectApostador}" />
+				        </p:selectOneMenu>
+				        
+				        <p:commandButton id="btnAddPunter" 
+								value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonAddApostador']}" 
+								title="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonAddApostador']}"
+								actionListener="#{cadastroEventMBean.addApostador()}"
+								disabled="#{cadastroEventMBean.addPunter}"
+								update=":form:growl :panelVisual :formDialogOpenEvent:pnOpenEvent"/>
+				    </h:panelGrid>
+				    
+				    <br/>
+				    
+	            	<p:dataTable id="tblUsuario" 
+							 var="item" 
+							 value="#{cadastroEventMBean.apostadores}" 
+							 emptyMessage="#{rotulo.gridvazio}"
+							 paginator="false" 
+							 rowIndexVar="index"
+							 style="width:100%;font-size:11px;">
+							 
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="N." />		                          
+		                    </f:facet>
+							<h:outputText value="#{index + 1}" />
+						</p:column>	 
+							 
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.nome']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.data']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.dataInclusao}">
+								<f:convertDateTime pattern="MM/dd/yyyy HH:mm" />  
+	            			</h:outputText>
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.estado']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.estadoUsuario.descricao}" />
+						</p:column>
+						
+						<p:column>
+							<p:commandButton id="btnDeletePunterEvent"
+								icon="ui-icon-trash" 
+								title="#{rotulo.excluir}" 
+								actionListener="#{cadastroEventMBean.deleteApostador(item)}" 
+								disabled="#{cadastroEventMBean.excluirPunter}"
+								update=":form:growl :panelVisual :formDialogOpenEvent:pnOpenEvent"/>
+						</p:column>	
+					</p:dataTable>
+					
+					<br/>
+					
+					<div align="right">
+						<p:commandButton id="btnCloseEventDialog" 
+								value="#{rotulo['fechar']}" 
+								title="#{rotulo['fechar']}"
+								onclick="dlgOpenEvent.hide();"/>
+					</div>
+					
+	            </p:panel>
+			</h:form>	            
+	    </p:dialog>
+	    
+	    <p:dialog id="modalDialogStartEvent" 
+	     		   widgetVar="dlgStartEvent" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="450" 
+	     		   width="940" 
+	     		   position="120,50"
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="#{rotulo['cadastroEvent.titulo.dialogOpenEvent']}">
+	     		   
+	    	<h:form id="formDialogStartEvent" prependId="false">
+	            <p:panel id="pnStartEvent" style="width:910px;height:440px;">
+				    <h:panelGrid columns="7" cellspacing="5">
+				    	<p:commandButton id="btnStartEvent" 
+								value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonStart']}" 
+								title="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonStart']}"
+								actionListener="#{cadastroEventMBean.iniciarEvento()}"
+								disabled="#{cadastroEventMBean.startedEvent}"
+								update=":form:growl :panelVisual :formDialogStartEvent:pnStartEvent"/>
+								
+						<p:commandButton id="btnCloseEvent" 
+								value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonStop']}" 
+								title="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.buttonStop']}"
+								actionListener="#{cadastroEventMBean.finalizarEvento()}"
+								disabled="#{cadastroEventMBean.stopedEvent}"
+								update=":form:growl :panelVisual :formDialogStartEvent:pnStartEvent"/>
+								
+						<p:spacer width="20"/>
+						
+						<p:panelGrid columns="1">
+							<f:facet name="header">  
+	        					<h:outputLabel value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.premio']}" />  
+	    					</f:facet>
+							<h:outputText value="R$ #{cadastroEventMBean.item.prizeWinner}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>	
+						</p:panelGrid>				
+						
+						<p:panelGrid columns="1">
+							<f:facet name="header">  
+	        					<h:outputLabel value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.primeiro']}" />
+	    					</f:facet>
+							<h:outputText value="R$ #{cadastroEventMBean.getPrimeiroPremio()}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>	
+						</p:panelGrid>
+						
+						<p:panelGrid columns="1" rendered="#{!(cadastroEventMBean.getSegundoPremio() == 0)}">
+							<f:facet name="header">  
+	        					<h:outputLabel value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.segundo']}" />  
+	    					</f:facet>
+							<h:outputText value="R$ #{cadastroEventMBean.getSegundoPremio()}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>	
+						</p:panelGrid>
+						
+						<p:panelGrid columns="1" rendered="#{!(cadastroEventMBean.getTerceiroPremio() == 0)}">
+							<f:facet name="header">  
+	        					<h:outputLabel value="#{rotulo['cadastroEvent.titulo.dialogOpenEvent.terceiro']}" />
+	    					</f:facet>
+							<h:outputText value="R$ #{cadastroEventMBean.getTerceiroPremio()}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>	
+						</p:panelGrid>
+				    </h:panelGrid>
+					    
+				    <br/>
+				    
+				    <p:scrollPanel style="height:300px"> 
+					    <p:dataTable id="tblPunter" 
+								 var="item" 
+								 value="#{cadastroEventMBean.pokerEventEntities}" 
+								 emptyMessage="#{rotulo.gridvazio}"
+								 paginator="false" 
+								 rowIndexVar="index"
+								 rowStyleClass="#{(index mod 2) eq 0 ? 'colorLineTable' : ''}" 
+								 style="width:870px;font-size:11px;">
+								 
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.index']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{index + 1}" />
+							</p:column>	 
+								 
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.nome']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.usuarioPokerEventEntityId.usuarioEntity.nome}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.buyin']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.countBuy}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.rebuyin']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.countRebuy}" rendered="#{cadastroEventMBean.stopedEvent}"/>
+								<p:spinner id="editCountRebuy" value="#{item.countRebuy}" min="0" max="15" size="2" rendered="#{!cadastroEventMBean.stopedEvent}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.addon']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.countAddon}" rendered="#{cadastroEventMBean.stopedEvent}"/>
+								<p:spinner id="editCountAddon" value="#{item.countAddon}" min="0" max="15" size="2" rendered="#{!cadastroEventMBean.stopedEvent}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.position']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.position}" rendered="#{cadastroEventMBean.stopedEvent}"/>
+								<p:inputText value="#{item.position}" size="2" rendered="#{!cadastroEventMBean.stopedEvent}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.prizeGain']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.prizeGain}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.ranking']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.rankingPoint}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column exportable="false">
+								<p:commandButton id="btnEditarPunterEvent" 
+												 icon="ui-icon-pencil" 
+												 title="#{rotulo.editar}" 
+												 actionListener="#{cadastroEventMBean.editarPunterEvent(item)}" 
+												 disabled="#{cadastroEventMBean.stopedEvent}"
+												 update=":form:growl :form:tblEvento :formDialogStartEvent:pnStartEvent"/>
+							</p:column>
+						</p:dataTable>
+				    </p:scrollPanel>
+				    
+					<p:spacer height="5" />
+					
+				    <div align="center">
+				    	<h:panelGrid columns="3" cellspacing="5">
+					    	<h:commandLink>  
+					            <p:graphicImage value="/resources/img/exporticon/csv.png" />  
+					            <p:dataExporter type="csv" target="tblPunter" fileName="evento"/>  
+					        </h:commandLink> 
+					        
+					        <p:spacer height="1" width="740"/>
+					        
+							<p:commandButton id="btnCloseStartEvent" 
+									value="#{rotulo['fechar']}" 
+									title="#{rotulo['fechar']}"
+									onclick="dlgStartEvent.hide();"/>
+						</h:panelGrid>	
+					</div>
+	            </p:panel>
+			</h:form>	            
+	    </p:dialog>
+	</div>
+</ui:define>
+</ui:composition>		

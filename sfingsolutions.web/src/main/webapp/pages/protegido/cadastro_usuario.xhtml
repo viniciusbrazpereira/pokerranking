@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/resources/includes/template_desktop.xhtml">
+
+<ui:define name="body">
+	<div id="pagina_centro" align="left">              
+		<p:panel id="panelVisual">
+			<f:facet name="header">
+			    <h:outputLabel value="#{rotulo['cadastroUsuario.titlePage']}" style="float:left;"/>
+			    <!-- right -->
+			    <h:form id="formButtonUser">			    	
+					<p:commandLink id="btnNovo" 
+								   title="#{rotulo['novo']}" 
+								   actionListener="#{cadastroUsuarioMBean.preNovo()}"
+								   oncomplete="dlgNovoCadastro.show();" 
+								   update=":form:growl :formDialogNovoCadastro:pnNovoCadastro"
+								   style="float:right;">
+									 
+						<p:graphicImage value="/resources/img/menuicon/blog_compose.png" width="24" height="24" />
+					</p:commandLink>												
+			    </h:form>
+			</f:facet>    
+              
+    		<h:form id="form">		    		
+    			<ui:include src="/resources/includes/custom_messages.xhtml" />
+    			
+    			<p:dataTable id="tblUsuario" 
+							 var="item" 
+							 value="#{cadastroUsuarioMBean.listagem}" 
+							 emptyMessage="#{rotulo.gridvazio}"
+							 paginator="true" 
+							 rows="#{cadastroUsuarioMBean.listagem.rows}" 
+							 rowsPerPageTemplate="#{cadastroUsuarioMBean.listagem.rowsPerPageTemplate}" 
+							 lazy="true" 
+							 style="width:100%;font-size:11px;" 
+							 paginatorPosition="#{cadastroUsuarioMBean.listagem.paginatorPosition}"					
+							 paginatorTemplate="#{cadastroUsuarioMBean.listagem.paginatorTemplate}">
+							 
+					<f:facet name="header"> 
+						<h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.titulo']}" />
+			        </f:facet>
+
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.id']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.id}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.login']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.userLogin}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.nome']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.estado']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.estadoUsuario.descricao}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.email']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.email}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.data']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.dataInclusao}">
+							<f:convertDateTime pattern="MM/dd/yyyy HH:mm" />  
+            			</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">  
+                           <h:outputLabel value="#{rotulo['cadastroUsuario.labelDataModel.phone']}" />		                          
+	                    </f:facet>
+						<h:outputText value="#{item.phone}" />
+					</p:column>
+					
+					<p:column>						
+						<p:commandButton id="btnEditar" icon="ui-icon-pencil" 
+							title="#{rotulo.editar}" 
+							actionListener="#{cadastroUsuarioMBean.preEditar(item)}" 
+							oncomplete="dlgNovoCadastro.show();"
+							update=":form:growl :formDialogNovoCadastro:pnNovoCadastro"/>
+														
+					</p:column>
+				</p:dataTable>
+    		
+    		</h:form>
+	    </p:panel>
+	    
+	    <p:dialog id="modalDialogNovoCadastro" 
+	     		   widgetVar="dlgNovoCadastro" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="490" 
+	     		   width="750" 
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="#{rotulo['cadastroUsuario.titulo.dialog']}">
+	     		   
+	        <h:form id="formDialogNovoCadastro" prependId="false">
+	            <p:panel id="pnNovoCadastro">
+		            <h:panelGrid columns="2" cellspacing="5" columnClasses="ui-column-cadastro-usuario">
+						<h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.nome']}" />
+		                <h:inputText value="#{cadastroUsuarioMBean.item.nome}" size="60"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.login']}" />
+		                <h:inputText value="#{cadastroUsuarioMBean.item.userLogin}" size="30"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.pass']}"/>
+		                <h:inputText value="#{cadastroUsuarioMBean.item.userPassword}" size="30" disabled="true"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.defalutPass']}"/>		
+		                <p:selectBooleanCheckbox value="#{cadastroUsuarioMBean.gerarSenha}" disabled="#{cadastroUsuarioMBean.isCadastro}"/> 
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.email']}" />
+		                <h:inputText value="#{cadastroUsuarioMBean.item.email}" size="60"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.celular']}" />
+		                <h:inputText value="#{cadastroUsuarioMBean.item.phone}" size="12" maxlength="11"/>
+		                
+		                <h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.estado']}" />
+				        <p:selectOneMenu id="selectEstado" value="#{cadastroUsuarioMBean.idSelectItemEstados}" style="width:200px">  
+				        	<f:selectItem itemLabel="#{rotulo['cadastroUsuario.itemLabelEstado']}" itemValue="" />  
+				            <f:selectItems value="#{cadastroUsuarioMBean.selectItemEstados}" />
+			        	</p:selectOneMenu>
+		            </h:panelGrid>
+		            
+		            <br />	
+		            
+		            <div align="center">
+			            <h:panelGrid>
+			            	<p:panel>
+				            	<f:facet name="header">  
+		        					<h:outputLabel value="#{rotulo['cadastroUsuario.dialogCadastro.perfis']}" />
+		    					</f:facet>
+		    					<p:pickList value="#{cadastroUsuarioMBean.listModelPerfilCadastro}" 
+		            					    var="perfilCadastro" 
+		            					    converter="PerfilEntityConverter"   
+	                                   		itemLabel="#{perfilCadastro.nome}"  
+	                                   		itemValue="#{perfilCadastro}" >
+			                    </p:pickList>
+		    				</p:panel>
+			            </h:panelGrid>
+			            
+			            <br />		            
+		            
+						<h:panelGrid columns="2" >			           	
+							<p:commandButton id="btnSalvar" 
+								value="#{rotulo['cadastroUsuario.dialog.botao.salvar']}" 
+								title="#{rotulo['cadastroUsuario.dialog.botao.salvar']}"
+								actionListener="#{cadastroUsuarioMBean.validarCamposCadastro()}"
+								update=":form:growl :formDialogConfirmeSalvar:pnConfirmDialogSalvar"/>	
+							
+							<p:commandButton id="btnCancelarCadastro" 
+								title="#{rotulo['cadastroUsuario.dialog.botao.cancelar']}" 
+								value="#{rotulo['cadastroUsuario.dialog.botao.cancelar']}" 
+								actionListener="#{cadastroUsuarioMBean.cancelar()}"
+								oncomplete="dlgNovoCadastro.hide();"/>
+						</h:panelGrid>			            		                        
+					</div>
+	            </p:panel>       
+	        </h:form>
+	    </p:dialog>
+	</div>
+</ui:define>
+</ui:composition>		

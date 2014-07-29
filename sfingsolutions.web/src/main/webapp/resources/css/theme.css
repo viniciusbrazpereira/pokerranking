@@ -1,0 +1,375 @@
+/*
+ZERANDO AS PROPRIEDADES MARGIN E PADDING
+PARA TODOS OS ELEMENTOS NA PÁGINA
+*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: black;
+	font: 85%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	/*background: url("#{resource['gfx/fundo0.jpg']}") no-repeat left top;*/
+}
+
+/*Opera Fix*/
+body:before {
+	content: "";
+	height: 100%;
+	float: left;
+	width: 0;
+	margin-top: -32767px;
+}
+
+#conteudo {}
+
+#topo {
+	background: #FFF;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	padding-top: 1px;
+	border-radius: 10px 10px 0px 0px;
+	/*background: url("#{resource['img/fundo_cabecalho.png']}") repeat-x right;*/
+}
+
+#principal {
+	padding-left: 5px;
+	padding-right: 0px;
+	float: left;
+	padding-top: 10px;
+	text-align: justify;
+	width: 99%;
+}
+
+#rodape {
+	background: #EEEEEE;
+	width: 99%;
+	height: 20px;
+	position: fixed;
+	bottom: 0;
+	border-width: 1px 0;
+	text-align: right;
+	border-radius: 0px 0px 10px 10px;
+	color: black;
+	border-top: 1px dashed #D5D5D5;
+}
+
+#rodape p {
+	margin: 0;
+	font-weight: bold;
+	color: #060;
+}
+
+/* Logo */
+.logo a {
+	/*background: url("#{resource['img/logo.png']}") no-repeat left top;*/
+	display: block;
+	float: left;
+	height: 50px;
+	width: 240px;
+	/*text-indent: -9000px;*/
+	margin-top: 25px;
+	margin-left: 10px;
+	text-decoration: none;
+	color: #000;
+}
+
+.layoutLogin {
+	position: relative;
+	margin-top: 130px;
+	padding: 0px;
+	width: 100%;
+	left: 390px;
+}
+
+.labelRodape {
+	font-size: small;
+	color: #000;
+	position: relative;
+	text-align: right;
+	margin-right: 10px;
+	margin-top: 5px;
+	padding: 0px;
+}
+
+.botaoSair {
+	font-size: small;
+	color: white;
+	position: relative;
+	text-align: right;
+	margin-right: 10px;
+	margin-top: 35px;
+	padding: 0px;
+}
+
+#mnuBar {
+	width: 99%;
+	margin-right: 10px;
+	position: absolute;
+}
+
+#mnuBarSistema {
+	width: 960px;
+}
+
+#pagina_centro {
+	text-align: left;
+	width: 100%;
+	position: relative;
+	margin-top: 45px;
+	padding-bottom: 35px;
+}
+
+.text-form-obs {
+	font-size: 9px;
+}
+
+.ui-button-default {
+	width: 120px;
+}
+
+.ui-tree {
+	width: 680px !important;
+	height: 260px !important;
+}
+
+.ui-column-default {
+	width: 120px !important;
+}
+
+.ui-column-cadastro-usuario {
+	width: 150px !important;
+}
+
+.noBorders tr,.noBorders td {
+	background: none !important;
+	border: none !important;
+}
+
+#passo li {
+	color: red;
+	margin: 5px;
+	cursor: pointer;
+}
+
+#passo li:hover {
+	background: yellow;
+}
+
+/* Picklist Config */
+.ui-picklist-button-add {
+	height: 20px;
+	width: 18px;
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/universal/header.png.jsf")
+		repeat-x scroll 50% 20% #ACBECE !important;
+}
+
+.ui-picklist-button-add-all {
+	height: 20px;
+	width: 18px;
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/universal/header.png.jsf")
+		repeat-x scroll 50% 20% #ACBECE !important;
+}
+
+.ui-picklist-button-remove {
+	height: 20px;
+	width: 18px;
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/universal/header.png.jsf")
+		repeat-x scroll 50% 20% #ACBECE !important;
+}
+
+.ui-picklist-button-remove-all {
+	height: 20px;
+	width: 18px;
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/universal/header.png.jsf")
+		repeat-x scroll 50% 20% #ACBECE !important;
+}
+
+.ui-picklist-list {
+	height: 110px !important;
+	width: 270px !important;
+	background-color: #FFFFFF !important;
+}
+
+/* ICONES DO MENU */
+/* ICONES DO MENU */
+.ui-icon-exit {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/power_blue.png.jsf")
+		no-repeat !important;
+	height: 48px;
+	width: 48px;
+}
+
+.ui-icon-tools {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/tools.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-cadastro {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/blog_add.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-receipt {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/receipt.png.jsf")
+		no-repeat !important;
+	height: 24px;
+	width: 24px;
+}
+
+.ui-icon-window {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/windows.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-plus {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/sub_black_add.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-pencil {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/pencil.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-trash {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/recycle_bin.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-search {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/search.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-new {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/blog_compose.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-sub-rotate {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/sub_black_rotate_ccw.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-user-group {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/user_group.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-save {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/save.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-paste {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/paste.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-block-black {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/block_black.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-user {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/user.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-calendar {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/calendar.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-sub-next {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/sub_black_next.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon-monitor {
+	background:
+		url("#{request.contextPath}/javax.faces.resource/img/menuicon/monitor.png.jsf")
+		no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+/* Menu parent */
+.ui-menu .ui-menu-parent .ui-menu-child {
+	white-space: nowrap !important;
+	width: 300px !important;
+}
+
+/* Cor da linha da tabela */
+.colorLineTable {
+    background: #FFF  !important ;
+}
+
+.colorLineTable: houver {
+    background: red  !important ;
+}

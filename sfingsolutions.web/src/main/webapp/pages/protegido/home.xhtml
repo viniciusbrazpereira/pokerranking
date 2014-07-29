@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/includes/template_desktop.xhtml">
+
+	<ui:define name="body">
+		<div id="pagina_centro" align="left">              
+				<h:form id="form">		    		
+    				<ui:include src="/resources/includes/custom_messages.xhtml" />
+    				
+    				<p:tabView id="tabView"  style="width:99.40%">
+    					<p:tab id="idRanking" title="Ranking">
+		    				<p:scrollPanel style="height:340px">
+			    				<p:dataTable id="tblPunter" 
+										 var="item" 
+										 value="#{homeMBean.pokerEventEntities}" 
+										 emptyMessage="#{rotulo.gridvazio}"
+										 paginator="false" 
+										 rowIndexVar="index"
+										 rowStyleClass="#{(index mod 2) eq 0 ? 'colorLineTable' : ''}" 
+										 style="width:1190px;font-size:11px;">
+										 
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.index']}" />		                          
+					                    </f:facet>
+										<h:outputText value="#{index + 1}" />
+									</p:column>	 
+										 
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.nome']}" />		                          
+					                    </f:facet>
+					                    <p:commandLink id="btnViewEvent" 
+														 actionListener="#{homeMBean.viewEvent(item)}" 
+														 oncomplete="dlgViewEvent.show();"
+														 update=":form:growl :formDialogViewEvent:pnViewEvent">
+											<h:outputText value="#{item.usuarioPokerEventEntityId.usuarioEntity.nome}" />
+										</p:commandLink>											
+									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.buyin']}" />		                          
+					                    </f:facet>
+										<h:outputText value="#{item.countBuy}" />
+									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.rebuyin']}" />		                          
+					                    </f:facet>
+					                    <h:outputText value="#{item.countRebuy}" />
+									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.addon']}" />		                          
+					                    </f:facet>
+					                    <h:outputText value="#{item.countAddon}"/>
+									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.prizeGain']}" />		                          
+					                    </f:facet>
+					                    <h:outputText value="R$ #{item.prizeGain}">
+					                    	<f:convertNumber pattern="##0,00"/> 
+										</h:outputText>
+									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                           <h:outputLabel value="#{rotulo['home.labelDataModel.addPunter.ranking']}" />		                          
+					                    </f:facet>
+					                    <h:outputText value="#{item.rankingPoint}">
+					                    	<f:convertNumber pattern="#,##0.00" />
+										</h:outputText>
+									</p:column>
+								</p:dataTable>
+							</p:scrollPanel>
+						
+							<br/>
+				
+							<p style="font-size:11px;"><b>Formula do Ranking</b></p>
+							<p style="font-size:11px;">(N - P + 1) + ( (PREMIO - SVP) / 25)</p>
+							<p style="font-size:11px;"><b>N: </b> Quantidade de apostadores do evento.</p> 
+							<p style="font-size:11px;"><b>P: </b> Colocação do evento.</p>
+							<p style="font-size:11px;"><b>PREMIO: </b> Valor ganho no evento.</p>
+							<p style="font-size:11px;"><b>SVP: </b> Somatório de Buy-in, Re-buy e Add-on no evento.</p>
+						</p:tab>
+					
+						<p:tab id="idEvent" title="Eventos">
+							<p:dataTable id="tblEvento" 
+										 var="item" 
+										 value="#{homeMBean.eventList}" 
+										 emptyMessage="#{rotulo.gridvazio}"
+										 rowIndexVar="index"
+										 rowStyleClass="#{(index mod 2) eq 0 ? 'colorLineTable' : ''}" 
+										 style="width:100%;font-size:11px;">
+										 
+								<f:facet name="header"> 
+									<h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.titulo']}" />
+						        </f:facet>
+			
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.id']}" />		                          
+				                    </f:facet>
+									<h:outputText value="#{item.id}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.descricao']}" />		                          
+				                    </f:facet>
+									<p:commandLink id="btnViewPunter" 
+												 actionListener="#{homeMBean.viewPunter(item)}" 
+												 oncomplete="dlgStartEvent.show();"
+												 update=":form:growl :formDialogStartEvent:pnStartEvent">
+										<h:outputText value="#{item.descricao}" />
+									</p:commandLink>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.buy']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+									<h:outputText value="#{item.buy}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.rebuy']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+									<h:outputText value="#{item.rebuy}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addon']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+									<h:outputText value="#{item.addon}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeWinner']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+									<h:outputText value="#{item.prizeWinner}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeHome']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+				                    <h:outputText value="#{item.prizeHome}">
+				                    	<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.prizeTotal']}" />		                          
+				                    </f:facet>
+				                    <h:outputText value="R$" />
+				                    <h:outputText value="#{item.prizeTotal}">
+				                    	<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataInclusao']}" />		                          
+				                    </f:facet>
+									<h:outputText value="#{item.dataInclusao}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+			            			</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.data']}" />		                          
+				                    </f:facet>
+									<h:outputText value="#{item.dataEvent}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+			            			</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataInicio']}" />		                          
+				                    </f:facet>
+									<h:outputText value="#{item.dataInicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+			            			</h:outputText>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">  
+			                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.dataFinal']}" />		                          
+				                    </f:facet>
+									<h:outputText value="#{item.dataFinal}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+			            			</h:outputText>
+								</p:column>
+							</p:dataTable>
+							
+							<br />
+							
+							<div align="left">
+						    	<h:panelGrid columns="1">
+							    	<h:commandLink>  
+							            <p:graphicImage value="/resources/img/exporticon/csv.png" />  
+							            <p:dataExporter type="csv" target="tblEvento" fileName="eventos"/>  
+							        </h:commandLink> 
+								</h:panelGrid>	
+							</div>
+						</p:tab>
+					</p:tabView>
+    			</h:form>	
+		</div>
+		
+		<p:dialog id="modalDialogViewEvent" 
+	     		   widgetVar="dlgViewEvent" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="450" 
+	     		   width="950" 
+	     		   position="120,50"
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="#{rotulo['home.titulo.dialogViewEvent']}">
+	     		   
+	    	 <h:form id="formDialogViewEvent" prependId="false">
+	         	<p:panel id="pnViewEvent" style="width:920px;height:440px;">
+	         		<p:panelGrid columns="1">
+						<h:outputText value="#{homeMBean.item.usuarioPokerEventEntityId.usuarioEntity.nome}"/>
+	         		</p:panelGrid>
+	         		
+	         		<p:spacer height="10" />
+	         	
+	         		<p:scrollPanel style="height:340px">
+		         		<p:dataTable id="tblPunter" 
+								 var="item" 
+								 value="#{homeMBean.eventEntities}" 
+								 emptyMessage="#{rotulo.gridvazio}"
+								 paginator="false" 
+								 rowIndexVar="index"
+								 rowStyleClass="#{(index mod 2) eq 0 ? 'colorLineTable' : ''}" 
+								 style="width:100%;font-size:11px;">
+								 
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.addPunter.index']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.id}"/>
+							</p:column>	
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.buy']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.buy}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.rebuy']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.rebuy}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+								x <h:outputText value="#{item.countRebuy}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.addon']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.addon}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+								x <h:outputText value="#{item.countAddon}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.prizeWinner']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.prizeWinner}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.prizeHome']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+			                    <h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.prizeHome}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.prizeTotal']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+			                    <h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.prizeTotal}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.dataInicio']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.dataInicio}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+		            			</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.dataFinal']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.dataFinal}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />  
+		            			</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.position']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.position}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.prizeGain']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.prizeGain}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['home.modalDialogViewEvent.ranking']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.rankingPoint}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:scrollPanel>
+					
+					<p:spacer height="10" />
+	         
+			         <div align="right">
+						<p:commandButton id="btnCloseStartEvent" 
+								value="#{rotulo['fechar']}" 
+								title="#{rotulo['fechar']}"
+								onclick="dlgViewEvent.hide();"/>
+					</div>
+	         	</p:panel>
+	         </h:form>
+		</p:dialog>
+		
+		<p:dialog id="modalDialogStartEvent" 
+	     		   widgetVar="dlgStartEvent" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   height="370" 
+	     		   width="940" 
+	     		   position="120,50"
+	     		   dynamic="true"
+	     		   appendToBody="true"
+	     		   header="">
+	     		   
+	    	<h:form id="formDialogStartEvent" prependId="false">
+	            <p:panel id="pnStartEvent" style="width:910px;height:360px;">
+				    <p:scrollPanel style="height:300px"> 
+					    <p:dataTable id="tblPunterTab" 
+								 var="item" 
+								 value="#{homeMBean.punterEventEntitiesTab}" 
+								 emptyMessage="#{rotulo.gridvazio}"
+								 paginator="false" 
+								 rowIndexVar="index"
+								 rowStyleClass="#{(index mod 2) eq 0 ? 'colorLineTable' : ''}" 
+								 style="width:870px;font-size:11px;">
+								 
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.index']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{index + 1}" />
+							</p:column>	 
+								 
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.nome']}" />		                          
+			                    </f:facet>
+								<h:outputText value="#{item.usuarioPokerEventEntityId.usuarioEntity.nome}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.buyin']}" />		                          
+			                    </f:facet>
+								<h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.buy}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.rebuyin']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.rebuy}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+								x <h:outputText value="#{item.countRebuy}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.addon']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="R$" />
+								<h:outputText value="#{item.usuarioPokerEventEntityId.pokerEventEntity.addon}">
+									<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+								x <h:outputText value="#{item.countAddon}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.position']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.position}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.prizeGain']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.prizeGain}"/>
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">  
+		                           <h:outputLabel value="#{rotulo['cadastroEvent.labelDataModel.addPunter.ranking']}" />		                          
+			                    </f:facet>
+			                    <h:outputText value="#{item.rankingPoint}">
+			                    	<f:convertNumber pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+				    </p:scrollPanel>
+				    
+					<p:spacer height="5" />
+					
+				    <div align="center">
+				    	<h:panelGrid columns="3" cellspacing="5">
+					    	<h:commandLink>  
+					            <p:graphicImage value="/resources/img/exporticon/csv.png" />  
+					            <p:dataExporter type="csv" target="tblPunterTab" fileName="evento"/>  
+					        </h:commandLink> 
+					        
+					        <p:spacer height="1" width="740"/>
+					        
+							<p:commandButton id="btnCloseStartEventTab" 
+									value="#{rotulo['fechar']}" 
+									title="#{rotulo['fechar']}"
+									onclick="dlgStartEvent.hide();"/>
+						</h:panelGrid>	
+					</div>
+	            </p:panel>
+			</h:form>	            
+	    </p:dialog>	     		   	
+	</ui:define>
+
+</ui:composition>

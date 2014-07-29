@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/resources/includes/template_desktop_noDialog.xhtml">
+
+<ui:define name="body">
+	<div id="pagina_centro" align="left">              
+		<p:panel id="panelVisual">
+                <f:facet name="header">
+	                <!-- left -->
+				    <h:outputLabel value="#{rotulo['cadastroMenu.titlePage']}" style="float:left;"/>
+				    <!-- right -->
+				    <h:form id="formButtonUser">			    	
+						<p:commandLink id="btnNovo" 
+									   title="#{rotulo['novo']}" 
+									   actionListener="#{cadastroMenuMBean.preNovo()}"
+									   oncomplete="dlgNovoCadastro.show();" 
+									   update=":form:growl :form:tblMenu :form:tblMenuFilho :formDialogNovoCadastro:pnNovoCadastro"
+									   style="float:right;">
+										 
+							<p:graphicImage value="/resources/img/menuicon/blog_compose.png" width="24" height="24" />
+						</p:commandLink>												
+				    </h:form>
+                </f:facet>    
+                
+		    	<h:form id="form">		    		
+		    		<ui:include src="/resources/includes/custom_messages.xhtml" />
+					
+		    		<p:dataTable id="tblMenu" 
+		    					 var="item" 
+		    					 value="#{cadastroMenuMBean.listagem}"
+		    					 emptyMessage="#{rotulo.gridvazio}"
+								 paginator="true" 
+								 rows="#{cadastroMenuMBean.listagem.rows}" 
+								 rowsPerPageTemplate="#{cadastroMenuMBean.listagem.rowsPerPageTemplate}" 
+								 lazy="true" 
+								 style="width:100%"
+								 paginatorPosition="#{cadastroMenuMBean.listagem.paginatorPosition}"					
+								 paginatorTemplate="#{cadastroMenuMBean.listagem.paginatorTemplate}">
+	
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.id']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.id}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.nome']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.sistema']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{cadastroMenuMBean.getNomeAcessoSistema(item.sistema)}" style="color:black"/>
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.icon']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.icon}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.cod']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.idPai}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.url']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.url}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.sequencia']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.sequencia}" />
+						</p:column>
+						
+						<p:column>
+							<p:commandButton id="btnEditar" icon="ui-icon-pencil" 
+								title="#{rotulo['cadastroMenu.tabela.botao.editar']}" 
+								actionListener="#{cadastroMenuMBean.preEditarPai(item)}" 
+								oncomplete="dlgNovoCadastro.show();"
+								update=":formDialogNovoCadastro:pnNovoCadastro :form:growl tblMenu"/>	
+								
+							<p:commandButton id="btnExcluir" icon="ui-icon-trash" 
+								title="#{rotulo['cadastroMenu.tabela.botao.excluir']}"
+								actionListener="#{cadastroMenuMBean.preDialogConfirm(item)}"							
+								oncomplete="dlgConfirmDialog.show();"
+								update=":formDialogConfirme:pnConfirmDialog :form:growl tblMenu"/>							
+						</p:column>
+						
+					</p:dataTable>
+					
+					<br />
+					
+		            <h:panelGrid columns="2" cellspacing="5" columnClasses="ui-column-default">
+	   					<h:outputLabel value="#{rotulo['cadastroMenu.label.cod']}" />
+	              		<p:selectOneMenu id="selectMenuPai" value="#{cadastroMenuMBean.idMenuPai}" style="width:320px">  
+				       		<f:selectItem itemLabel="#{rotulo['cadastroMenu.itemMenuPai']}" itemValue="0" />  
+				            <f:selectItems value="#{cadastroMenuMBean.menuPai}" />
+				            <p:ajax event="change" update="tblMenuFilho" listener="#{cadastroMenuMBean.handleMenuPaiChange()}" />
+				        </p:selectOneMenu>	                	
+					</h:panelGrid>
+					
+					<br />   
+					
+					<p:dataTable id="tblMenuFilho" 
+		    					 var="item" 
+		    					 value="#{cadastroMenuMBean.listagemFilho}"
+		    					 emptyMessage="#{rotulo.gridvazio}">
+	
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.id']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.id}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.nome']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.sistema']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{cadastroMenuMBean.getNomeAcessoSistema(item.sistema)}" style="color:black"/>
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.icon']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.icon}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.url']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.url}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">  
+	                           <h:outputLabel value="#{rotulo['cadastroMenu.tabela.sequencia']}" />		                          
+		                    </f:facet>
+							<h:outputText value="#{item.sequencia}" />
+						</p:column>
+						
+						<p:column>
+							<p:commandButton id="btnEditar" icon="ui-icon-pencil" 
+								title="#{rotulo['cadastroMenu.tabela.botao.editar']}" 
+								actionListener="#{cadastroMenuMBean.preEditarFilho(item)}" 
+								oncomplete="dlgNovoCadastro.show();"
+								update=":form:growl :formDialogNovoCadastro:pnNovoCadastro"/>	
+								
+							<p:commandButton id="btnExcluir" icon="ui-icon-trash" 
+								title="#{rotulo['cadastroMenu.tabela.botao.excluir']}"
+								actionListener="#{cadastroMenuMBean.preDialogConfirm(item)}"							
+								oncomplete="dlgConfirmDialog.show();"
+								update=":form:growl :formDialogConfirme:pnConfirmDialog"/>							
+						</p:column>
+						
+					</p:dataTable>
+                </h:form>
+            </p:panel>
+            
+			<p:dialog id="modalDialogNovoCadastro" 
+	     		   widgetVar="dlgNovoCadastro" 
+	     		   modal="true" 
+	     		   resizable="false" 
+	     		   width="750" 
+	     		   height="320" 
+	     		   dynamic="true"
+	     		   header="#{rotulo['cadastroMenu.titulo.dialog']}"
+	     		   appendToBody="true">
+	     		   
+	        <h:form id="formDialogNovoCadastro" prependId="false">
+	        	<p:panel id="pnNovoCadastro">
+	            	<h:panelGrid columns="2"  cellspacing="4" columnClasses="ui-column-default">
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.nome']}" />
+               			<p:inputText id="inputNome" value="#{cadastroMenuMBean.item.nome}" size="50" maxlength="50"/>	                	
+
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.action']}" />
+               			<p:inputText value="#{cadastroMenuMBean.item.actionListener}" size="50" maxlength="50"/>	                	
+
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.icon']}" />
+               			<p:inputText id="inputIcon" value="#{cadastroMenuMBean.item.icon}" size="30" maxlength="30"/>	                	
+
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.cod']}" />
+               			<p:selectOneMenu id="selectMenu" value="#{cadastroMenuMBean.item.idPai}" style="width:320px">  
+				       		<f:selectItem itemLabel="#{rotulo['cadastroMenu.itemMenuPai']}" itemValue="0" />  
+				            <f:selectItems value="#{cadastroMenuMBean.menuPai}" />
+				            <p:ajax event="change" update="selectSequencia" listener="#{cadastroMenuMBean.handleSequenciaChange()}" />
+				        </p:selectOneMenu>	                	
+				        
+				        <h:outputLabel value="#{rotulo['cadastroMenu.label.sistema']}" />
+               			<p:selectOneMenu id="selectSistema" value="#{cadastroMenuMBean.item.sistema}" style="width:320px">  
+				       		<f:selectItem itemLabel="#{rotulo['cadastroMenu.itemSistema']}" itemValue="" />  
+				            <f:selectItems value="#{cadastroMenuMBean.sistema}" />
+				        </p:selectOneMenu>
+	                	
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.url']}" />
+               			<p:inputText value="#{cadastroMenuMBean.item.url}" size="60" maxlength="100"/>	                	
+	                	
+    					<h:outputLabel value="#{rotulo['cadastroMenu.label.sequencia']}" />		    				
+               			<p:selectOneMenu id="selectSequencia" value="#{cadastroMenuMBean.item.sequencia}" style="width:120px">  
+				            <f:selectItems value="#{cadastroMenuMBean.sequencia}" />
+				        </p:selectOneMenu>		                		                		
+	                	
+	                	<h:outputLabel value="#{rotulo['cadastroMenu.label.isSubmenu']}" />		
+		                <p:selectBooleanCheckbox value="#{cadastroMenuMBean.item.isSubMenu}"/>		                	
+		            </h:panelGrid>
+		            
+		            <br />
+		            
+		            <div align="center">
+			            <h:panelGrid columns="3" >			           	
+							<p:commandButton id="btnSalvar" 
+								value="#{rotulo['cadastroMenu.dialog.botao.salvar']}" 
+								title="#{rotulo['cadastroMenu.dialog.botao.salvar']}"
+								actionListener="#{cadastroMenuMBean.validarCamposCadastro()}"
+								icon="ui-icon-save"
+								update=":form:growl :form:tblMenu :form:tblMenuFilho :formDialogConfirmeSalvar:pnConfirmDialogSalvar"/>
+							
+							<p:commandButton id="btnCancelarCadastro" 
+								title="#{rotulo['cadastroMenu.dialog.botao.cancelar']}" 
+								value="#{rotulo['cadastroMenu.dialog.botao.cancelar']}" 
+								actionListener="#{cadastroMenuMBean.cancelar()}"
+								icon="ui-icon-block-black"
+								oncomplete="dlgNovoCadastro.hide();"/>
+						</h:panelGrid>			                        
+					</div>
+				</p:panel>
+	        </h:form>
+	    </p:dialog>            
+	   	</div>
+	   	
+	   	<p:dialog id="confirmDialog" widgetVar="dlgConfirmDialog" modal="true" resizable="false" width="400" height="80" dynamic="true" appendToBody="true">
+	    	<h:form id="formDialogConfirme" prependId="false">
+				<p:panel id="pnConfirmDialog">
+					<div align="center">
+				    	<h:panelGrid columns="2">
+				   			<h:outputText value="#{rotulo['cadastroMenu.mensagemDialogExcluir']}" />			   			
+				   		</h:panelGrid>
+				   		
+				   		<h:panelGrid columns="2">
+							<p:commandButton id="confirm" 
+									value="#{rotulo['concluir']}"
+									oncomplete="dlgConfirmDialog.hide();dlgNovoCadastro.hide();"  
+							     	actionListener="#{cadastroMenuMBean.excluir()}"
+							     	update=":form:growl :form:tblMenu :form:tblMenuFilho" />
+							          
+							<p:commandButton id="decline" value="#{rotulo['cancelar']}" onclick="dlgConfirmDialog.hide()" type="button" />
+						</h:panelGrid>
+					</div>	
+				</p:panel>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="confirmDialogSalvar" widgetVar="dlgConfirmDialogSalvar" modal="true" resizable="false" width="400" height="80" dynamic="true" appendToBody="true">
+	    	<h:form id="formDialogConfirmeSalvar" prependId="false">
+				<p:panel id="pnConfirmDialogSalvar">
+					<div align="center">
+				    	<h:panelGrid columns="2">
+				   			<h:outputText value="#{rotulo['cadastroMenu.mensagemDialogSalvar']}" />			   			
+				   		</h:panelGrid>
+				   		
+				   		<h:panelGrid columns="2">
+							<p:commandButton id="confirmSalvar" 
+									value="#{rotulo['concluir']}"
+									oncomplete="dlgConfirmDialogSalvar.hide();dlgNovoCadastro.hide();"  
+							     	actionListener="#{cadastroMenuMBean.salvar()}"
+							     	update=":form:growl :form:tblMenu :form:tblMenuFilho" />
+							          
+							<p:commandButton id="declineSalvar"
+									value="#{rotulo['cancelar']}" 
+									onclick="dlgConfirmDialogSalvar.hide();"																	 
+									type="button" />
+						</h:panelGrid>
+					</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+         
+        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>              
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" appendToBody="true" resizable="false">  
+		    <p:graphicImage value="/resources/img/ajaxloadingbar.gif" />  
+		</p:dialog>	    	
+    </ui:define>
+</ui:composition>

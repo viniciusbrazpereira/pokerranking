@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
+	<meta http-equiv="refresh" content="1505" />
+	<title>Poker Ranking</title>
+	<h:outputStylesheet library="css" name="theme.css" />
+	<h:outputScript library="js" name="locale-primefaces.js" />
+	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/icon/user_fila.ico" />
+</h:head>
+
+<f:view contentType="text/html">
+	<h:body>
+		<!-- Habilitar JavaScript -->
+		<noscript>
+			<p>O javascript de seu navegador está desabilitado. Favor
+				habilitá-lo para acessar as funcionalidades deste site.</p>
+		</noscript>
+
+		<div id="tudo">
+			<div id="conteudo">
+				<div id="topo">
+					<ui:include src="/resources/includes/cabecalho.xhtml" />
+				</div>
+
+				<div id="principal">					
+					<ui:insert name="topnav">
+						<ui:include src="/resources/includes/frmMenuBar.xhtml" />
+					</ui:insert>					
+					
+					<ui:insert name="body" />
+				</div>
+
+			</div>
+
+			<div id="rodape">
+				<h:outputLabel value="#{rotulo['sistema.versao']}" />
+				<h:outputLabel value="#{rotulo['sistema.number']}" />
+			</div>
+		</div>
+		
+		<ui:include src="/resources/includes/dialog_messages.xhtml" />
+	</h:body>
+</f:view>
+
+</html>

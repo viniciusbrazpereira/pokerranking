@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+	<h:form id="frmLogin">
+		<ui:include src="/resources/includes/custom_messages.xhtml" />			
+		<h:panelGrid>
+			<div align="center">
+				<h:panelGrid columns="3" cellspacing="0" cellpadding="0">
+						<h:outputLabel value="#{rotulo['login.username']} " for="username" />
+						<h:outputLabel for="password" value="#{rotulo['login.password']} " />
+						<h:outputLabel value="" />
+					
+						<p:inputText id="username" value="#{loginUsuarioMBean.username}" style="width: 90%;" />
+						<p:password id="password" value="#{loginUsuarioMBean.password}" style="width: 90%;"/>
+						<p:commandButton value="#{rotulo['login.btnLogin']}" 
+					            	     action="#{loginUsuarioMBean.login}"  
+					            	     update="growl" 
+					            	     ajax="true" 
+					            	     icon="ui-icon-check"
+					            	     id="loginSubmit"  />
+					            	
+					    <p:defaultCommand target="loginSubmit" /> 
+				</h:panelGrid>		
+			</div>
+		</h:panelGrid>			
+	</h:form>
+	
+	<p:dialog id="trocarSenhaDialog" widgetVar="dlgTrocarSenhaDialog" modal="true" resizable="false" width="420" height="200" dynamic="true" appendToBody="true">
+    	<h:form id="formTrocarSenhaDialog" prependId="false">
+			<p:panel id="pnTrocarSenhaDialog">
+				<ui:include src="/resources/includes/custom_messages.xhtml" />
+				
+		    	<h:panelGrid columns="2">
+		   			<h:outputText value="#{rotulo['login.mensagem.password']}" />			   			
+		   		</h:panelGrid>
+		   		
+		   		<h:panelGrid columns="2">
+		   			<h:outputLabel value="#{rotulo['login.atualpassword']} "/>
+					<p:password id="senhaAtual" value="#{loginUsuarioMBean.currentPassword}" size="20" maxlength="30"/>
+					
+					<h:outputLabel value="#{rotulo['login.password']} " />
+					<p:password id="alterarPassword" value="#{loginUsuarioMBean.password}" size="20" maxlength="30"/>
+					
+					<h:outputLabel value="#{rotulo['login.confirmpassword']} " />
+					<p:password id="confirmPassword" value="#{loginUsuarioMBean.confirmPassword}" size="20" maxlength="30"/>			   			
+		   		</h:panelGrid>
+		   		
+		   		<br /><br />
+		   		
+		   		<div align="center">
+			   		<h:panelGrid columns="2">
+						<p:commandButton id="confirmSalvar" 
+								value="#{rotulo['concluir']}"
+								update="growl"
+						     	actionListener="#{loginUsuarioMBean.alterarSenha()}"/>
+						          
+						<p:commandButton id="declineSalvar"
+								value="#{rotulo['cancelar']}" 
+								onclick="dlgTrocarSenhaDialog.hide();"																	 
+								type="button" />
+					</h:panelGrid>
+				</div>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+</ui:composition>

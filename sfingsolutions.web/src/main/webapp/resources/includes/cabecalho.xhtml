@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h1 class="logo">
+		<a href="#{request.contextPath}/pages/protegido/home.jsf" accesskey="1"><h:outputLabel value="#{rotulo['sistema.titulo']}" /></a>
+	</h1>
+	
+	<h3 class="labelRodape">
+		<h:outputLabel value="#{rotulo['cabecalho.bemVindo']}" rendered="#{sessionScope.usuario.nome != null}" />
+		<h:outputLabel value="#{sessionScope.usuario.nome}" rendered="#{sessionScope.usuario.nome != null}" />
+	</h3>
+		
+	<h3 class="botaoSair">
+		<h:form id="formLogaut">
+			<h:commandLink rendered="#{sessionScope.usuario.nome != null}" 
+						   title="#{rotulo['sistema.logaut']}" 
+						   actionListener="#{loginUsuarioMBean.logoutButton()}">
+						   
+				<p:graphicImage value="/resources/img/menuicon/power_blue.png" width="32" height="32" />
+			</h:commandLink>
+		</h:form>
+	</h3>
+	
+</ui:composition>
