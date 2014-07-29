@@ -1,10 +1,10 @@
 Poker Raking
 ============
 
-Projeto para gerenciamento de torneios de poker com ranking. Onde possa reunir os amigos e fazer torneios com premia��es di�rias ou ainda maiores ao final de um per�odo.
-Mostrando ao final do per�odo quem � o melhor em fazer seus oponentes ser dominados por seu jogo.
-Poker Ranking consiste em um simples software que ao cadastrar seus amigos pode se criar um evento(pokerday) podendo definir quais os nive�s,
-valores e per�do de blinds. 
+Projeto para gerenciamento de torneios de poker com ranking. Onde possa reunir os amigos e fazer torneios com premiações diárias ou ainda maiores ao final de um período.
+Mostrando ao final do período quem é o melhor em fazer seus oponentes ser dominados por seu jogo.
+Poker Ranking consiste em um simples software que ao cadastrar seus amigos pode se criar um evento(pokerday) podendo definir quais os niveis,
+valores e perído de blinds. 
 Totalmente desenvolvido na tecnologia java, a mesma utilizando em tablets e smartphones.
 
 
