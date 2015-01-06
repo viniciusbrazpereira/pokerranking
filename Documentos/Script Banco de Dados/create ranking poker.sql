@@ -95,6 +95,8 @@ CREATE TABLE `pokerranking`.`punter_pokerEvent` (
   CONSTRAINT `punter_foreign` FOREIGN KEY (`idPunter`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
+USE pokerranking$$
+
 CREATE TABLE `nivel` (
   `id_nivel` int(11) NOT NULL AUTO_INCREMENT,
   `number_nivel` int(11) NOT NULL,
@@ -125,111 +127,32 @@ VALUES(
 '987285067'
 )$$
 
-INSERT INTO `pokerranking`.`menu`
-(`nome_menu`,
-`actionlistener`,
-`icon`,
-`codmenupai`,
-`url`,
-`sequencia`,
-`sistema`,
-`submenu`)
-VALUES
-(
-'Sistema', 
-'', 
-'ui-icon-tools', 
-0, 
-'', 
+INSERT INTO `pokerranking`.`usuario`
+(`login`,
+`userpassword`,
+`email`,
+`nome`,
+`codestado`,
+`dataInclusao`,
+`phone`)
+VALUES(
+'pokerview',
+'sfingy.com.br', 
+'viniciusbrazpereira@gmail.com.br', 
+'VIEW SYSTEM', 
 1, 
-'A', 
-1
+'2014-01-01 00:00:00', 
+'987285067'
 )$$
 
 INSERT INTO `pokerranking`.`menu`
-(`nome_menu`,
-`actionlistener`,
-`icon`,
-`codmenupai`,
-`url`,
-`sequencia`,
-`sistema`,
-`submenu`)
-VALUES
-(
-'Cadastro Menu', 
-'', 
-'ui-icon-window', 
-1, 
-'/pages/protegido/cadastro_menu.jsf', 
-1, 
-'A', 
-0
-)$$
-
-INSERT INTO `pokerranking`.`menu`
-(`nome_menu`,
-`actionlistener`,
-`icon`,
-`codmenupai`,
-`url`,
-`sequencia`,
-`sistema`,
-`submenu`)
-VALUES
-(
-'Cadastro Usuário', 
-'', 
-'ui-icon-window', 
-1, 
-'/pages/protegido/cadastro_usuario.jsf', 
-2, 
-'A', 
-0
-)$$
-
-INSERT INTO `pokerranking`.`menu`
-(`nome_menu`,
-`actionlistener`,
-`icon`,
-`codmenupai`,
-`url`,
-`sequencia`,
-`sistema`,
-`submenu`)
-VALUES
-(
-'Cadastro Evento', 
-'', 
-'ui-icon-window', 
-1, 
-'/pages/protegido/cadastro_pokerEvent.jsf', 
-3, 
-'A', 
-0
-)$$
-
-INSERT INTO `pokerranking`.`menu`
-(`nome_menu`,
-`actionlistener`,
-`icon`,
-`codmenupai`,
-`url`,
-`sequencia`,
-`sistema`,
-`submenu`)
-VALUES
-(
-'Cadastro Perfil', 
-'', 
-'ui-icon-window', 
-1, 
-'/pages/protegido/perfil_menu.jsf', 
-4, 
-'A', 
-0
-)$$
-
+VALUES (1,'Sistema','','ui-icon-tools',0,'',2,'A',1),
+(2,'Cadastro Menu','','ui-icon-window',1,'/pages/protegido/cadastro_menu.jsf',1,'A',0),
+(3,'Cadastro Usuário','','ui-icon-window',1,'/pages/protegido/cadastro_usuario.jsf',2,'A',0),
+(4,'Cadastro Evento','','ui-icon-window',1,'/pages/protegido/cadastro_pokerEvent.jsf',3,'A',0),
+(5,'Cadastro Perfil','','ui-icon-window',1,'/pages/protegido/perfil_menu.jsf',4,'A',0),
+(6,'Home','','ui-icon-monitor',0,'/pages/protegido/home.jsf',1,'A',1),
+(7,'Cadastro Nível','','ui-icon-window',1,'/pages/protegido/cadastro_nivel.jsf',5,'A',0)$$
 
 INSERT INTO `pokerranking`.`perfil`
 (`nome_perfil`,
@@ -250,49 +173,7 @@ VALUES
 )$$
 
 INSERT INTO `pokerranking`.`perfilmenu`
-(`codperfil`,
-`codmenu`)
-VALUES
-(
-1,
-1
-)$$
-
-INSERT INTO `pokerranking`.`perfilmenu`
-(`codperfil`,
-`codmenu`)
-VALUES
-(
-1,
-2
-)$$
-
-INSERT INTO `pokerranking`.`perfilmenu`
-(`codperfil`,
-`codmenu`)
-VALUES
-(
-1,
-3
-)$$
-
-INSERT INTO `pokerranking`.`perfilmenu`
-(`codperfil`,
-`codmenu`)
-VALUES
-(
-1,
-4
-)$$
-
-INSERT INTO `pokerranking`.`perfilmenu`
-(`codperfil`,
-`codmenu`)
-VALUES
-(
-1,
-5
-)$$
+VALUES (2,6),(1,1),(1,2),(1,3),(1,4),(1,5),(1,7)$$
 
 INSERT INTO `pokerranking`.`usuarioperfil`
 (`id`,
@@ -312,3 +193,11 @@ VALUES
 2
 )$$
 
+INSERT INTO `pokerranking`.`usuarioperfil`
+(`id`,
+`codperfil`)
+VALUES
+(
+2,
+2
+)$$
