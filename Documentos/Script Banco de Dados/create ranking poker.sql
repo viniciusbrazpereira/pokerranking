@@ -4,6 +4,8 @@ DROP schema IF EXISTS `pokerranking`$$
 
 CREATE DATABASE `pokerranking` /*!40100 DEFAULT CHARACTER SET latin1 */$$
 
+USE pokerranking$$
+
 CREATE TABLE `pokerranking`.`estadousuario` (
   `codestado` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(50) NOT NULL,
